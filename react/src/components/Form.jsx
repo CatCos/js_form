@@ -6,6 +6,7 @@ import FormFooter from './FormFooter.jsx';
 
 import { FORM_LEFT, FORM_RIGHT } from '../constants/form';
 
+import { validate } from '../utils/validate.js';
 /**
  * Button component
  *
@@ -18,9 +19,13 @@ class Form extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      comment: ''
+      comment: '',
+      subscribe: false,
+      error: '',
+      hasError: false
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   /**
@@ -29,13 +34,30 @@ class Form extends React.Component {
    * @param e event
    */
   handleChange(data) {
-    const { e, inputName } = data;
-    let value = e.target.value;
+    const { e, inputName, value } = data;
+    let inputValue = value !== undefined ? value : e.target.value;
 
-    this.state[inputName] = value;
+    this.state[inputName] = inputValue;
 
     this.setState(this.state);
 
+  }
+
+  handleSubmit(e) {
+    console.log('FORM SUBMIT', e, this.state);
+
+    const error = validate(this.state.email, 'email');
+
+    if (error) {
+      this.state.error = error;
+      this.state.hasError = true;
+      this.setState(this.state);
+    } else {
+      this.state.error = '';
+      this.state.hasError = false;
+      this.setState(this.state);
+    }
+    console.log(error);
   }
 
   renderLeftForm() {
@@ -50,6 +72,8 @@ class Form extends React.Component {
           text={field.text}
           type={field.type}
           field={field.field}
+          hasError={field.field === 'email' && this.state.hasError}
+          error={this.state.error}
           onChange={this.handleChange}/>
       );
     });
@@ -89,7 +113,7 @@ class Form extends React.Component {
                 {this.renderRightForm()}
               </div>
             </div>
-            <FormFooter />
+            <FormFooter onClick={this.handleSubmit}  onChange={this.handleChange}/>
         </div>
       </form>
     );

@@ -30,6 +30,7 @@ export const FORM_FOOTER = {
   fields: [{
     name: 'subscribe',
     text: 'Subscribe to follow up comments from this post',
-    type: 'checkbox'
+    type: 'checkbox',
+    field: 'subscribe'
   }]
 };
