@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="form-footer"
+>
+  <div
+    className="left-form-footer"
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        className="label"
+        htmlFor="subscribe"
+      >
+        Subscribe to follow up comments from this post
+      </label>
+      <input
+        className={
+          Array [
+            "checkbox",
+          ]
+        }
+        id="subscribe"
+        name="subscribe"
+        onChange={[Function]}
+        type="checkbox"
+        value={false}
+      />
+    </div>
+  </div>
+  <div
+    className="right-form-footer"
+  >
+    <div
+      className="form-group"
+    >
+      <button
+        className="submit-button"
+        onClick={[Function]}
+      >
+        Submit comment
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classSet from 'classnames';
 
 import Tooltip from './Tooltip.jsx';
@@ -32,7 +33,6 @@ function Input(props) {
     className = classSet(className);
   }
 
-
   return (
 
     <div className="form-group">
@@ -49,9 +49,26 @@ function Input(props) {
   );
 }
 
+Input.propTypes = {
+  className: PropTypes.string,
+  name: PropTypes.string,
+  type: PropTypes.string,
+  field: PropTypes.string,
+  error: PropTypes.string,
+  text: PropTypes.string,
+  onChange: PropTypes.func,
+  hasError: PropTypes.bool
+};
+
 Input.defaultProps = {
+  name: '',
+  value: '',
+  field: '',
+  error: '',
+  text: '',
   className: 'input',
-  hasError: false
+  hasError: false,
+  type: 'text'
 };
 
 export default Input;

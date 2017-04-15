@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="label"
+    htmlFor="text"
+  >
+    Submit comment
+  </label>
+  <textarea
+    className="textarea"
+    id="text"
+    name="text"
+    onChange={[Function]}
+    type="text"
+    value="text"
+  />
+</div>
+`;

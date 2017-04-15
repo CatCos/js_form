@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function handleChange(e, inputName, props) {
   if (props.onChange) {
@@ -28,5 +29,23 @@ function Textarea(props) {
     </div>
   );
 }
+
+Textarea.propTypes = {
+  name: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
+  field: PropTypes.string,
+  text: PropTypes.string,
+  onChange: PropTypes.func
+};
+
+Textarea.defaultProps = {
+  name: '',
+  value: '',
+  field: '',
+  text: '',
+  className: 'input',
+  type: 'text'
+};
 
 export default Textarea;

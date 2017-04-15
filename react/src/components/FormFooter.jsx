@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { FORM_FOOTER } from '../constants/form';
 
@@ -95,5 +96,13 @@ class FormFooter extends React.Component {
   }
 
 }
+
+FormFooter.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
+};
+
+FormFooter.defaultProps = {
+};
 
 export default FormFooter;

@@ -44,8 +44,6 @@ class Form extends React.Component {
   }
 
   handleSubmit(e) {
-    console.log('FORM SUBMIT', e, this.state);
-
     const error = validate(this.state.email, 'email');
 
     if (error) {
@@ -57,7 +55,7 @@ class Form extends React.Component {
       this.state.hasError = false;
       this.setState(this.state);
     }
-    console.log(error);
+
   }
 
   renderLeftForm() {

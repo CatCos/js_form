@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 /**
  * Render function
  *
@@ -12,5 +12,14 @@ function Button(props) {
     </div>
   );
 }
+
+Button.propTypes = {
+  text: PropTypes.string,
+  onSubmit: PropTypes.func
+};
+
+Button.defaultProps = {
+  text: ''
+};
 
 export default Button;

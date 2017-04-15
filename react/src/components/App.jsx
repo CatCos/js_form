@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 
 import Header from './Header.jsx';
 import Form from './Form.jsx';
-import '../assets/main.css';
+
+require('../assets/main.css');
 /**
  * Render function
  *
@@ -20,6 +21,5 @@ function App(props) {
     </div>
   );
 }
-
 
 export default App;
