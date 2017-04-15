@@ -74,7 +74,13 @@ function Input(props) {
   return (
 
     <div className="form-group">
-        <label htmlFor={props.name} className={props.labelClassName}>{props.text}{props.required && renderRequired()}</label>
+        <label
+          htmlFor={props.name}
+          className={props.labelClassName}>
+          
+          {props.text}
+          {props.required && renderRequired()}
+        </label>
         <input
           className={className}
           id={props.name}
