@@ -2,7 +2,17 @@ export function validate(value, inputName) {
   switch(inputName) {
     case 'email':
       return isEmail(value);
+    default:
+      return isEmpty(value);
   }
+}
+
+function isEmpty(value) {
+  if (!value || value === '') {
+    return 'Required';
+  }
+
+  return false;
 }
 
 function isEmail(value) {

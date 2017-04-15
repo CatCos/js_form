@@ -3,17 +3,20 @@ export const FORM_LEFT = {
     name: 'first_name',
     text: 'First Name',
     type: 'text',
-    field: 'firstName'
+    field: 'firstName',
+    required: true
   }, {
     name: 'last_name',
     text: 'Last Name',
     type: 'text',
-    field: 'lastName'
+    field: 'lastName',
+    required: true
   }, {
     name: 'email',
     text: 'Email',
     type: 'text',
-    field: 'email'
+    field: 'email',
+    required: true
   }]
 };
 

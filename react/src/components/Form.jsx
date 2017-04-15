@@ -21,11 +21,12 @@ class Form extends React.Component {
       email: '',
       comment: '',
       subscribe: false,
-      error: '',
-      hasError: false
+      error: {},
+      hasError: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   /**
@@ -44,17 +45,43 @@ class Form extends React.Component {
   }
 
   handleSubmit(e) {
-    const error = validate(this.state.email, 'email');
+    const fields = FORM_LEFT.fields;
+    let hasErrors = false;
+    fields.map((field) => {
+      let error = validate(this.state[field.field], field.field);
+
+      if (error) {
+        hasErrors = true;
+        this.state.error[field.field] = error;
+        this.state.hasError[field.field] = true;
+      } else {
+        this.state.error[field.name] = '';
+        this.state.hasError[field.field] = false;
+      }
+
+    });
+    if (!hasErrors) {
+      alert("your comment was submitted " + this.state.firstName)
+    }
+    
+    this.setState(this.state);
+
+  }
+
+  handleBlur(data) {
+    const { e, inputName } = data;
+
+    const error = validate(this.state[inputName], inputName);
 
     if (error) {
-      this.state.error = error;
-      this.state.hasError = true;
-      this.setState(this.state);
+      this.state.error[inputName] = error;
+      this.state.hasError[inputName] = true;
     } else {
-      this.state.error = '';
-      this.state.hasError = false;
-      this.setState(this.state);
+      this.state.error[inputName] = '';
+      this.state.hasError[inputName] = false;
     }
+
+    this.setState(this.state);
 
   }
 
@@ -70,9 +97,11 @@ class Form extends React.Component {
           text={field.text}
           type={field.type}
           field={field.field}
-          hasError={field.field === 'email' && this.state.hasError}
-          error={this.state.error}
-          onChange={this.handleChange}/>
+          required={field.required}
+          hasError={this.state.hasError[field.field]}
+          error={this.state.error[field.field]}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}/>
       );
     });
 

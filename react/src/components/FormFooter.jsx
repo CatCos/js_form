@@ -66,6 +66,7 @@ class FormFooter extends React.Component {
           text={field.text}
           type={field.type}
           field={field.field}
+          labelClassName={'checkbox-label'}
           onChange={this.handleChange}
           className='checkbox'/>
       );
