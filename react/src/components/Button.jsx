@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 /**
- * Render function
+ * Render Button Component
  *
  * @params props Component properties
  */
 function Button(props) {
   return (
     <div className="form-group">
-        <button className="submit-button" onClick={props.onSubmit}>{props.text}</button>
+        <button className="submit-button"
+          onClick={props.onSubmit}>
+          {props.text}
+        </button>
     </div>
   );
 }

@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Handle on change event
+ *
+ * @param e Event
+ * @param inputName Name of the input that triggered the onChange
+ * @param props Component properties
+ */
 function handleChange(e, inputName, props) {
   if (props.onChange) {
     return props.onChange({
@@ -11,9 +18,9 @@ function handleChange(e, inputName, props) {
 }
 
 /**
- * Render function
+ * Render Textarea component
  *
- * @params props Component properties
+ * @param props Component properties
  */
 function Textarea(props) {
   return (

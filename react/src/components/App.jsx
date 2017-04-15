@@ -4,8 +4,9 @@ import Header from './Header.jsx';
 import Form from './Form.jsx';
 
 require('../assets/main.css');
+
 /**
- * Render function
+ * Render App component
  *
  * @params props Component properties
  */

@@ -32,7 +32,7 @@ class Form extends React.Component {
   /**
    * Handle change event
    *
-   * @param e event
+   * @param data Data from the component that triggered onChange
    */
   handleChange(data) {
     const { e, inputName, value } = data;
@@ -44,9 +44,15 @@ class Form extends React.Component {
 
   }
 
+  /**
+   * Handle on submit event
+   *
+   * @param e Event
+   */
   handleSubmit(e) {
     const fields = FORM_LEFT.fields;
     let hasErrors = false;
+
     fields.map((field) => {
       let error = validate(this.state[field.field], field.field);
 
@@ -61,12 +67,18 @@ class Form extends React.Component {
 
     });
     if (!hasErrors) {
-      alert("your comment was submitted " + this.state.firstName)
+      alert('your comment was submitted ' + this.state.firstName);
     }
-    
+
     this.setState(this.state);
 
   }
+
+  /**
+   * Handle on blur event
+   *
+   * @param data Data from the component that triggered onBlur
+   */
 
   handleBlur(data) {
     const { e, inputName } = data;
@@ -85,6 +97,10 @@ class Form extends React.Component {
 
   }
 
+  /**
+   * Render left form
+   *
+   */
   renderLeftForm() {
     const fields = FORM_LEFT.fields;
 
@@ -108,6 +124,10 @@ class Form extends React.Component {
     return items;
   }
 
+  /**
+   * Render right form
+   *
+   */
   renderRightForm() {
     const fields = FORM_RIGHT.fields;
 
@@ -127,6 +147,10 @@ class Form extends React.Component {
     return items;
   }
 
+  /**
+   * Render function
+   *
+   */
   render() {
 
     return (

@@ -1,5 +1,5 @@
 export function validate(value, inputName) {
-  switch(inputName) {
+  switch (inputName) {
     case 'email':
       return isEmail(value);
     default:
@@ -7,6 +7,11 @@ export function validate(value, inputName) {
   }
 }
 
+/**
+ * Validate if value is empty
+ *
+ * @param value  Value to validate
+ */
 function isEmpty(value) {
   if (!value || value === '') {
     return 'Required';
@@ -14,6 +19,12 @@ function isEmpty(value) {
 
   return false;
 }
+
+/**
+ * Validate if value isfix a valid email
+ *
+ * @param value  Value to validate
+ */
 
 function isEmail(value) {
   if (!value) {

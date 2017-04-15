@@ -4,6 +4,14 @@ import classSet from 'classnames';
 
 import Tooltip from './Tooltip.jsx';
 
+/**
+ * Handle on change event
+ *
+ * @param e Event
+ * @param inputName Name of the input that triggered the onChange
+ * @param props Component properties
+ */
+
 function handleChange(e, inputName, props) {
   if (props.onChange) {
     return props.onChange({
@@ -13,6 +21,14 @@ function handleChange(e, inputName, props) {
   }
 }
 
+/**
+ * Handle on blur event
+ *
+ * @param e Event
+ * @param inputName Name of the input that triggered the onBlur
+ * @param props Component properties
+ */
+
 function handleBlur(e, inputName, props) {
   if (props.onBlur) {
     return props.onBlur({
@@ -21,10 +37,20 @@ function handleBlur(e, inputName, props) {
     });
   }
 }
+
+/**
+ * Render required span
+ *
+ */
 function renderRequired() {
   return (<span className="require">*</span>);
 }
 
+/**
+* Render Tooltip
+*
+* @param props Component properties
+*/
 function renderTooltip(props) {
   return (
     <Tooltip value={props.error}/>
@@ -32,7 +58,7 @@ function renderTooltip(props) {
 }
 
 /**
- * Render function
+ * Render Input component
  *
  * @params props Component properties
  */

@@ -24,7 +24,7 @@ class FormFooter extends React.Component {
   /**
    * Handle change event
    *
-   * @param e event
+   * @param data Data from the component that triggered onChange
    */
   handleChange(data) {
     const { e, inputName } = data;
@@ -41,6 +41,11 @@ class FormFooter extends React.Component {
     }
   }
 
+  /**
+   * Handle on submit event
+   *
+   * @param e Event
+   */
   handleSubmit(e) {
     e.preventDefault();
 
@@ -54,6 +59,10 @@ class FormFooter extends React.Component {
 
   }
 
+  /**
+   * Render left form
+   *
+   */
   renderLeftForm() {
     const fields = FORM_FOOTER.fields;
 
@@ -75,6 +84,10 @@ class FormFooter extends React.Component {
     return items;
   }
 
+  /**
+   * Render submit button
+   *
+   */
   renderButton() {
     return (
       <Button
@@ -83,6 +96,10 @@ class FormFooter extends React.Component {
     );
   }
 
+  /**
+   * Render function
+   *
+   */
   render() {
     return (
       <div className="form-footer">

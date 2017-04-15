@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * Render function
+ * Render Tooltip component
  *
  * @params props Component properties
  */

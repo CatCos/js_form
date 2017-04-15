@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 
 /**
- * Render function
+ * Render Header Co mponent
  *
  * @params props Component properties
  */
@@ -13,6 +13,5 @@ function Header(props) {
     </header>
   );
 }
-
 
 export default Header;
