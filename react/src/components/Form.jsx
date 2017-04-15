@@ -28,8 +28,13 @@ class Form extends React.Component {
    *
    * @param e event
    */
-  handleChange(e, inputName) {
-    let value = e.target.value ? e.target.value : e.currentTarget.value;
+  handleChange(data) {
+    const { e, inputName } = data;
+    let value = e.target.value;
+
+    this.state[inputName] = value;
+
+    this.setState(this.state);
 
   }
 
@@ -38,7 +43,14 @@ class Form extends React.Component {
 
     let items = fields.map((field, key) => {
       return (
-        <Input key={key} name={field.name} text={field.text} type={field.type}/>
+        <Input
+          key={key}
+          name={field.name}
+          value={this.state[field.field]}
+          text={field.text}
+          type={field.type}
+          field={field.field}
+          onChange={this.handleChange}/>
       );
     });
 
@@ -50,7 +62,14 @@ class Form extends React.Component {
 
     let items = fields.map((field, key) => {
       return (
-        <Textarea key={key} name={field.name} text={field.text} type={field.type}/>
+        <Textarea
+          key={key}
+          name={field.name}
+          value={this.state[field.field]}
+          text={field.text}
+          type={field.type}
+          field={field.field}
+          onChange={this.handleChange}/>
       );
     });
 

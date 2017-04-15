@@ -2,15 +2,18 @@ export const FORM_LEFT = {
   fields: [{
     name: 'first_name',
     text: 'First Name',
-    type: 'text'
+    type: 'text',
+    field: 'firstName'
   }, {
     name: 'last_name',
     text: 'Last Name',
-    type: 'text'
+    type: 'text',
+    field: 'lastName'
   }, {
     name: 'email',
     text: 'Email',
-    type: 'text'
+    type: 'text',
+    field: 'email'
   }]
 };
 
@@ -18,10 +21,10 @@ export const FORM_RIGHT = {
   fields: [{
     name: 'comment',
     text: 'Comment',
-    type: 'text'
+    type: 'text',
+    field: 'comment'
   }]
 };
-
 
 export const FORM_FOOTER = {
   fields: [{
