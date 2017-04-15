@@ -48,14 +48,14 @@ body {
 }
 
 .left-form {
-  position: absolute;
+  float: left;
   width: 30%;
   left:0;
   padding: 20px 20px;
 }
 
 .right-form {
-  position: absolute;
+  float: right;
   width: 60%;
   right: 0;
   padding: 20px 20px;
@@ -81,6 +81,10 @@ body {
   font-size: 20px;
 }
 
+.require {
+  font-size: 20px;
+  color: blue;
+}
 .textarea {
   border: 2px solid #D3D3D3;
   border-radius: 5px 5px;
@@ -97,25 +101,23 @@ body {
 }
 
 .form-footer {
-  position: absolute;
   width: 98.5%;
   height: 100%;
   max-height: 100px;
   bottom: 0;
   background-color: #ffffff;
-  top: 400px;
   padding: 10px 10px;
 }
 
 .left-form-footer {
-  position: absolute;
+  float: left;
   width: 65%;
   left:0;
   padding: 20px 20px;
 }
 
 .right-form-footer {
-  position: absolute;
+  float: right;
   width: 25%;
   right: 0;
   padding: 20px 20px;
@@ -235,11 +237,13 @@ body {
   .input {
     font-size: 10px;
     padding: 5px;
-    height: 55px;
+    height: 25px;
+    width: 90%;
+
 
 }
   .textarea {
-    width: 100%;
+    width: 80%;
     height: 150px;
   }
 
@@ -250,6 +254,14 @@ body {
     font-size: 20px;
   }
 
+  .submit-button {
+
+    margin-left: 50px;
+  }
+
+  .Tooltip {
+    width: 90%;
+  }
 }
 
 @media screen and (min-width: 400px) and (max-width: 800px) {
