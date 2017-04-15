@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 
-
 /**
- * Render Header Co mponent
+ * Render Header Component
  *
  * @params props Component properties
  */
