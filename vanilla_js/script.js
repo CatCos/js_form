@@ -2,6 +2,7 @@ function onSubmit() {
   var firstName = document.getElementById('first_name');
   var lastName = document.getElementById('last_name');
   var email = document.getElementById('email');
+  var comment = document.getElementById('comment');
 
   var tooltipFirstName = document.getElementById('tooltip_first_name');
   var tooltipSpanFirstName = document.getElementById('tooltip-span-first_name');
@@ -12,9 +13,18 @@ function onSubmit() {
   var tooltipEmail = document.getElementById('tooltip_email');
   var tooltipSpanEmail = document.getElementById('tooltip-span-email');
 
-  validateEmail(email, email.value, tooltipEmail, tooltipSpanEmail);
-  validateRequired(firstName, firstName.value, tooltipFirstName, tooltipSpanFirstName);
-  validateRequired(lastName, lastName.value, tooltipLastName, tooltipSpanLastName);
+  var hasErrors = false;
+  var hasErrorEmail = validateEmail(email, email.value, tooltipEmail, tooltipSpanEmail);
+  var hasErrorFirstName = validateRequired(firstName, firstName.value, tooltipFirstName, tooltipSpanFirstName);
+  var hasErrorLastName = validateRequired(lastName, lastName.value, tooltipLastName, tooltipSpanLastName);
+
+  if (!hasErrorEmail && !hasErrorFirstName && !hasErrorLastName) {
+    alert(firstName.value + ' your comment was submitted.');
+    email.value = '';
+    firstName.value = '';
+    lastname.value = '';
+    comment.value = '';
+  }
 
   return false;
 
@@ -29,14 +39,19 @@ function onSubmit() {
  * @param tooltipSpan Tooltip span element
  */
 function validateEmail(field, value, tooltip, tooltipSpan) {
+
   if (isEmpty(value)) {
     field.className += ' input-error';
     tooltip.className += ' Tooltip-error';
     tooltipSpan.innerHTML = 'Required';
+    return true;
+
   } else if (!isEmail(value)) {
     field.className += ' input-error';
     tooltip.className += ' Tooltip-error';
     tooltipSpan.innerHTML = 'Invalid Email';
+    return true;
+
   } else {
     field.classList.remove('input-error');
     tooltip.classList.remove('Tooltip-error');
@@ -55,11 +70,14 @@ function validateEmail(field, value, tooltip, tooltipSpan) {
  */
 
 function validateRequired(field, value, tooltip, tooltipSpan) {
+
   var error = isEmpty(value);
+
   if (error) {
     field.className += ' input-error';
     tooltip.className += ' Tooltip-error';
     tooltipSpan.innerHTML = 'Required';
+    return true;
   } else {
     field.classList.remove('input-error');
     tooltip.classList.remove('Tooltip-error');

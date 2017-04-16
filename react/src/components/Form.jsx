@@ -67,7 +67,17 @@ class Form extends React.Component {
 
     });
     if (!hasErrors) {
-      alert('your comment was submitted ' + this.state.firstName);
+      alert(this.state.firstName + ' your comment was submitted.');
+      this.state = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        comment: '',
+        subscribe: false,
+        error: {},
+        hasError: {}
+      };
+      this.setState(this.state);
     }
 
     this.setState(this.state);
