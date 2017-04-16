@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="Tooltip Tooltip-error"
+  id="tooltip"
+>
+  <div
+    className="Tooltip__arrow"
+  />
+  <div
+    className="Tooltip__balloon"
+  >
+    <span
+      className="Tooltip__label"
+      id="tooltip-span"
+    >
+      Required
+    </span>
+  </div>
+</div>
+`;

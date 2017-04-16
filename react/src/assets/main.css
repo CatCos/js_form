@@ -1,0 +1,318 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+
+  font-size: 15px;
+
+  color: #444A59;
+  background-color: #FFFFFF;
+}
+
+.header {
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid  #D3D3D3;
+  padding-left: 20px;
+  color: #A9A9A9;
+}
+
+.page-title {
+  font-size: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.form-page {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+}
+
+.main-form {
+  width: 90%;
+  height: 50%;
+  background-color: #ffffff;
+}
+
+.left-form {
+  float: left;
+  width: 30%;
+  left:0;
+  padding: 20px 20px;
+}
+
+.right-form {
+  float: right;
+  width: 60%;
+  right: 0;
+  padding: 20px 20px;
+  margin-left: 20px;
+}
+
+.form-group {
+  width:100%;
+  margin-right:20px;
+  margin-top: 20px;
+}
+
+.input {
+  width: 100%;
+  border: 2px solid #D3D3D3;
+  border-radius: 5px 5px;
+  margin-top: 10px;
+  padding: 20px 20px;
+  font-size: 15px;
+}
+
+.label {
+  font-size: 20px;
+}
+
+.require {
+  font-size: 20px;
+  color: blue;
+}
+
+.textarea {
+  border: 2px solid #D3D3D3;
+  border-radius: 5px 5px;
+  margin-top: 10px;
+  padding: 20px 20px;
+  font-size: 15px;
+  width: 100%;
+  height: 250px;
+}
+
+.form-inputs {
+  display: block;
+}
+
+.form-footer {
+  width: 98.5%;
+  height: 100%;
+  max-height: 100px;
+  bottom: 0;
+  background-color: #ffffff;
+  padding: 10px 10px;
+  display: block;
+  height: 200px;
+  clear: both;
+}
+
+.left-form-footer {
+  float: left;
+  width: 65%;
+  left:0;
+  padding: 20px 20px;
+}
+
+.right-form-footer {
+  float: right;
+  width: 25%;
+  right: 0;
+  padding: 20px 20px;
+  margin-left: 20px;
+}
+
+.checkbox {
+  float: left;
+  margin-right: 10px;
+}
+
+.submit-button {
+  width: 180px;
+  height: 60px;
+  background-color: white;
+  border: 1px solid #FF4500;
+  border-radius: 10px 10px;
+  margin-top: -20px;
+  font-size: 15px;
+  color: #FF4500;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #f6f6f6;
+}
+
+.input-error {
+  border: 1px solid red;
+  color: red;
+}
+
+.Tooltip {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 2px;
+  visibility: visible;
+  display: none;
+}
+
+.Tooltip-error {
+  display: block;
+}
+
+.Tooltip-error .Tooltip__arrow {
+  height: 0;
+  width: 0;
+  border-bottom: 4px solid #f4d5d2;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+}
+
+.Tooltip__balloon {
+  color: #d9746a;
+  background-color: #f4d5d2;
+  padding: 10px;
+  height: 20px;
+}
+
+.Tooltip__label {
+  display: block;
+}
+
+.checkbox-label {
+  font-size: 15px;
+}
+.label {
+  font-size: 20px;
+}
+
+/**
+ * Phone size screen
+ */
+@media screen and (max-width: 450px) {
+
+  .main-form {
+    margin-top: 2px;
+    padding-left: 10px;
+    height: 90%;
+    width: auto;
+  }
+
+  .form-inputs {
+    width: 100%;
+  }
+
+  .left-form,
+  .right-form {
+    width: 100%;
+    height: auto;
+    padding-left: 5px;
+    margin-left: 0;
+    padding: 0;
+  }
+
+  .left-form-footer,
+  .right-form-footer {
+    width: 100%;
+    height: auto;
+    padding-left: 5px;
+    margin-left: 0;
+  }
+
+  .form-footer {
+    width: 100%;
+    position: static;
+    height: auto;
+    top: 0;
+    padding: 0;
+    margin-left: 0;
+  }
+
+  .form-group {
+    margin-top: 5px;
+  }
+
+  .input {
+    font-size: 10px;
+    padding: 5px;
+    height: 25px;
+    width: 90%;
+  }
+
+  .textarea {
+    width: 80%;
+    height: 150px;
+  }
+
+  .checkbox-label {
+    font-size: 12px;
+  }
+
+  .label {
+    font-size: 20px;
+  }
+
+  .submit-button {
+    margin-left: 20px;
+    width: 100%;
+  }
+
+  .Tooltip {
+    width: 90%;
+  }
+}
+
+/**
+ * Tablet size screen
+ *
+ */
+@media screen and (min-width: 400px) and (max-width: 800px) {
+
+  .main-form {
+    margin-top: 2px;
+    padding-left: 10px;
+  }
+
+  .left-form,
+  .right-form {
+    width: 100%;
+    height: auto;
+    padding-left: 5px;
+    margin-left: 0;
+    padding: 0;
+  }
+
+  .left-form-footer,
+  .right-form-footer {
+    height: auto;
+    padding-left: 5px;
+    margin-left: 0;
+    padding-right: 0;
+    margin-top: 10px;
+  }
+
+  .submit-button {
+    width: 150px;
+    float: right;
+  }
+
+  .form-footer {
+    width: 106%;
+    height: auto;
+    padding: 0;
+    margin-top: 10px;
+  }
+
+  .checkbox-label {
+    font-size: 20px;
+  }
+
+  .label {
+    font-size: 20px;
+  }
+}

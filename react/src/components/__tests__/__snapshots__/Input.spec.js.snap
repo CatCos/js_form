@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="label"
+    htmlFor="text"
+  >
+    Submit comment
+  </label>
+  <input
+    className={
+      Array [
+        "input",
+      ]
+    }
+    id="text"
+    name="text"
+    onChange={[Function]}
+    type="text"
+    value="text"
+  />
+</div>
+`;
