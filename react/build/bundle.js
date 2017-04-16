@@ -6737,6 +6737,14 @@ var _Tooltip2 = _interopRequireDefault(_Tooltip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handle on change event
+ *
+ * @param e Event
+ * @param inputName Name of the input that triggered the onChange
+ * @param props Component properties
+ */
+
 function handleChange(e, inputName, props) {
   if (props.onChange) {
     return props.onChange({
@@ -6746,12 +6754,46 @@ function handleChange(e, inputName, props) {
   }
 }
 
+/**
+ * Handle on blur event
+ *
+ * @param e Event
+ * @param inputName Name of the input that triggered the onBlur
+ * @param props Component properties
+ */
+
+function handleBlur(e, inputName, props) {
+  if (props.onBlur) {
+    return props.onBlur({
+      e: e,
+      inputName: inputName
+    });
+  }
+}
+
+/**
+ * Render required span
+ *
+ */
+function renderRequired() {
+  return _react2.default.createElement(
+    'span',
+    { className: 'require' },
+    '*'
+  );
+}
+
+/**
+* Render Tooltip
+*
+* @param props Component properties
+*/
 function renderTooltip(props) {
   return _react2.default.createElement(_Tooltip2.default, { value: props.error });
 }
 
 /**
- * Render function
+ * Render Input component
  *
  * @params props Component properties
  */
@@ -6769,8 +6811,11 @@ function Input(props) {
     { className: 'form-group' },
     _react2.default.createElement(
       'label',
-      { htmlFor: props.name, className: 'label' },
-      props.text
+      {
+        htmlFor: props.name,
+        className: props.labelClassName },
+      props.text,
+      props.required && renderRequired()
     ),
     _react2.default.createElement('input', {
       className: className,
@@ -6780,6 +6825,9 @@ function Input(props) {
       name: props.name,
       onChange: function onChange(e) {
         return handleChange(e, props.field, props);
+      },
+      onBlur: function onBlur(e) {
+        return handleBlur(e, props.field, props);
       } }),
     props.hasError && renderTooltip(props)
   );
@@ -6787,13 +6835,16 @@ function Input(props) {
 
 Input.propTypes = {
   className: _propTypes2.default.string,
+  labelClassName: _propTypes2.default.string,
   name: _propTypes2.default.string,
   type: _propTypes2.default.string,
   field: _propTypes2.default.string,
   error: _propTypes2.default.string,
   text: _propTypes2.default.string,
   onChange: _propTypes2.default.func,
-  hasError: _propTypes2.default.bool
+  onBlur: _propTypes2.default.func,
+  hasError: _propTypes2.default.bool,
+  required: _propTypes2.default.bool
 };
 
 Input.defaultProps = {
@@ -6803,7 +6854,9 @@ Input.defaultProps = {
   error: '',
   text: '',
   className: 'input',
+  labelClassName: 'label',
   hasError: false,
+  required: false,
   type: 'text'
 };
 
@@ -6824,17 +6877,20 @@ var FORM_LEFT = exports.FORM_LEFT = {
     name: 'first_name',
     text: 'First Name',
     type: 'text',
-    field: 'firstName'
+    field: 'firstName',
+    required: true
   }, {
     name: 'last_name',
     text: 'Last Name',
     type: 'text',
-    field: 'lastName'
+    field: 'lastName',
+    required: true
   }, {
     name: 'email',
     text: 'Email',
     type: 'text',
-    field: 'email'
+    field: 'email',
+    required: true
   }]
 };
 
@@ -10227,8 +10283,9 @@ var _Form2 = _interopRequireDefault(_Form);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 __webpack_require__(203);
+
 /**
- * Render function
+ * Render App component
  *
  * @params props Component properties
  */
@@ -10273,7 +10330,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Render function
+ * Render Button Component
  *
  * @params props Component properties
  */
@@ -10283,7 +10340,8 @@ function Button(props) {
     { className: 'form-group' },
     _react2.default.createElement(
       'button',
-      { className: 'submit-button', onClick: props.onSubmit },
+      { className: 'submit-button',
+        onClick: props.onSubmit },
       props.text
     )
   );
@@ -10359,18 +10417,19 @@ var Form = function (_React$Component) {
       email: '',
       comment: '',
       subscribe: false,
-      error: '',
-      hasError: false
+      error: {},
+      hasError: {}
     };
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleBlur = _this.handleBlur.bind(_this);
     return _this;
   }
 
   /**
    * Handle change event
    *
-   * @param e event
+   * @param data Data from the component that triggered onChange
    */
 
 
@@ -10387,25 +10446,85 @@ var Form = function (_React$Component) {
 
       this.setState(this.state);
     }
+
+    /**
+     * Handle on submit event
+     *
+     * @param e Event
+     */
+
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
-      var error = (0, _validate.validate)(this.state.email, 'email');
+      var _this2 = this;
 
-      if (error) {
-        this.state.error = error;
-        this.state.hasError = true;
-        this.setState(this.state);
-      } else {
-        this.state.error = '';
-        this.state.hasError = false;
+      var fields = _form.FORM_LEFT.fields;
+      var hasErrors = false;
+
+      fields.map(function (field) {
+        var error = (0, _validate.validate)(_this2.state[field.field], field.field);
+
+        if (error) {
+          hasErrors = true;
+          _this2.state.error[field.field] = error;
+          _this2.state.hasError[field.field] = true;
+        } else {
+          _this2.state.error[field.name] = '';
+          _this2.state.hasError[field.field] = false;
+        }
+      });
+      if (!hasErrors) {
+        alert(this.state.firstName + ' your comment was submitted.');
+        this.state = {
+          firstName: '',
+          lastName: '',
+          email: '',
+          comment: '',
+          subscribe: false,
+          error: {},
+          hasError: {}
+        };
         this.setState(this.state);
       }
+
+      this.setState(this.state);
     }
+
+    /**
+     * Handle on blur event
+     *
+     * @param data Data from the component that triggered onBlur
+     */
+
+  }, {
+    key: 'handleBlur',
+    value: function handleBlur(data) {
+      var e = data.e,
+          inputName = data.inputName;
+
+
+      var error = (0, _validate.validate)(this.state[inputName], inputName);
+
+      if (error) {
+        this.state.error[inputName] = error;
+        this.state.hasError[inputName] = true;
+      } else {
+        this.state.error[inputName] = '';
+        this.state.hasError[inputName] = false;
+      }
+
+      this.setState(this.state);
+    }
+
+    /**
+     * Render left form
+     *
+     */
+
   }, {
     key: 'renderLeftForm',
     value: function renderLeftForm() {
-      var _this2 = this;
+      var _this3 = this;
 
       var fields = _form.FORM_LEFT.fields;
 
@@ -10413,21 +10532,29 @@ var Form = function (_React$Component) {
         return _react2.default.createElement(_Input2.default, {
           key: key,
           name: field.name,
-          value: _this2.state[field.field],
+          value: _this3.state[field.field],
           text: field.text,
           type: field.type,
           field: field.field,
-          hasError: field.field === 'email' && _this2.state.hasError,
-          error: _this2.state.error,
-          onChange: _this2.handleChange });
+          required: field.required,
+          hasError: _this3.state.hasError[field.field],
+          error: _this3.state.error[field.field],
+          onChange: _this3.handleChange,
+          onBlur: _this3.handleBlur });
       });
 
       return items;
     }
+
+    /**
+     * Render right form
+     *
+     */
+
   }, {
     key: 'renderRightForm',
     value: function renderRightForm() {
-      var _this3 = this;
+      var _this4 = this;
 
       var fields = _form.FORM_RIGHT.fields;
 
@@ -10435,15 +10562,21 @@ var Form = function (_React$Component) {
         return _react2.default.createElement(_Textarea2.default, {
           key: key,
           name: field.name,
-          value: _this3.state[field.field],
+          value: _this4.state[field.field],
           text: field.text,
           type: field.type,
           field: field.field,
-          onChange: _this3.handleChange });
+          onChange: _this4.handleChange });
       });
 
       return items;
     }
+
+    /**
+     * Render function
+     *
+     */
+
   }, {
     key: 'render',
     value: function render() {
@@ -10542,7 +10675,7 @@ var FormFooter = function (_React$Component) {
   /**
    * Handle change event
    *
-   * @param e event
+   * @param data Data from the component that triggered onChange
    */
 
 
@@ -10564,6 +10697,13 @@ var FormFooter = function (_React$Component) {
         });
       }
     }
+
+    /**
+     * Handle on submit event
+     *
+     * @param e Event
+     */
+
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
@@ -10577,6 +10717,12 @@ var FormFooter = function (_React$Component) {
         });
       }
     }
+
+    /**
+     * Render left form
+     *
+     */
+
   }, {
     key: 'renderLeftForm',
     value: function renderLeftForm() {
@@ -10592,12 +10738,19 @@ var FormFooter = function (_React$Component) {
           text: field.text,
           type: field.type,
           field: field.field,
+          labelClassName: 'checkbox-label',
           onChange: _this2.handleChange,
           className: 'checkbox' });
       });
 
       return items;
     }
+
+    /**
+     * Render submit button
+     *
+     */
+
   }, {
     key: 'renderButton',
     value: function renderButton() {
@@ -10605,6 +10758,12 @@ var FormFooter = function (_React$Component) {
         text: 'Submit comment',
         onSubmit: this.handleSubmit });
     }
+
+    /**
+     * Render function
+     *
+     */
+
   }, {
     key: 'render',
     value: function render() {
@@ -10655,7 +10814,7 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Render function
+ * Render Header Component
  *
  * @params props Component properties
  */
@@ -10694,6 +10853,13 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Handle on change event
+ *
+ * @param e Event
+ * @param inputName Name of the input that triggered the onChange
+ * @param props Component properties
+ */
 function handleChange(e, inputName, props) {
   if (props.onChange) {
     return props.onChange({
@@ -10704,9 +10870,9 @@ function handleChange(e, inputName, props) {
 }
 
 /**
- * Render function
+ * Render Textarea component
  *
- * @params props Component properties
+ * @param props Component properties
  */
 function Textarea(props) {
   return _react2.default.createElement(
@@ -10771,7 +10937,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Render function
+ * Render Tooltip component
  *
  * @params props Component properties
  */
@@ -10818,8 +10984,29 @@ function validate(value, inputName) {
   switch (inputName) {
     case 'email':
       return isEmail(value);
+    default:
+      return isEmpty(value);
   }
 }
+
+/**
+ * Validate if value is empty
+ *
+ * @param value  Value to validate
+ */
+function isEmpty(value) {
+  if (!value || value === '') {
+    return 'Required';
+  }
+
+  return false;
+}
+
+/**
+ * Validate if value isfix a valid email
+ *
+ * @param value  Value to validate
+ */
 
 function isEmail(value) {
   if (!value) {
@@ -12816,7 +13003,7 @@ exports = module.exports = __webpack_require__(98)(undefined);
 
 
 // module
-exports.push([module.i, "html {\n    height: 100%;\n}\n\nbody {\n  min-height: 100%;\n  margin: 0;\n\n  font-size: 15px;\n\n  color: #444A59;\n  background-color: #FFFFFF;\n}\n\n.header {\n  height: 100px;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  background-color: #ffffff;\n  border-bottom: 1px solid  #D3D3D3;\n  padding-left: 20px;\n  color: #A9A9A9;\n}\n\n\n.page-title {\n  font-size: 20px;\n}\n\n.container {\n  width: 100%;\n  max-width: 1240px;\n  margin: 0 auto;\n}\n\n.form-page {\n  display: flex;\n  flex-direction: row;\n  flex: 1 0 auto;\n}\n\n.main-form {\n  position: relative;\n  width: 90%;\n  height: 50%;\n  background-color: #ffffff;\n}\n\n.left-form {\n  position: absolute;\n  width: 30%;\n  left:0;\n  padding: 20px 20px;\n}\n\n.right-form {\n  position: absolute;\n  width: 60%;\n  right: 0;\n  padding: 20px 20px;\n  margin-left: 20px;\n}\n\n.form-group {\n  width:100%;\n  margin-right:20px;\n  margin-top: 20px;\n}\n\n.input {\n  width: 100%;\n  border: 2px solid #D3D3D3;\n  border-radius: 5px 5px;\n  margin-top: 10px;\n  padding: 20px 20px;\n  font-size: 15px;\n}\n\n.label {\n  font-size: 20px;\n}\n\n.textarea {\n  border: 2px solid #D3D3D3;\n  border-radius: 5px 5px;\n  margin-top: 10px;\n  padding: 20px 20px;\n  font-size: 15px;\n  width: 100%;\n  height: 250px;\n}\n\n.form-inputs {\n  position: relative;\n  top: 0;\n}\n\n.form-footer {\n  position: absolute;\n  width: 98.5%;\n  height: 100%;\n  max-height: 100px;\n  bottom: 0;\n  background-color: #ffffff;\n  top: 400px;\n  padding: 10px 10px;\n}\n\n.left-form-footer {\n  position: absolute;\n  width: 65%;\n  left:0;\n  padding: 20px 20px;\n}\n\n.right-form-footer {\n  position: absolute;\n  width: 25%;\n  right: 0;\n  padding: 20px 20px;\n  margin-left: 20px;\n}\n\n.checkbox {\n  float: left;\n  margin-right: 10px;\n}\n\n.submit-button {\n  width: 180px;\n  height: 60px;\n  background-color: white;\n  border: 1px solid #FF4500;\n  border-radius: 10px 10px;\n  margin-top: -20px;\n  font-size: 15px;\n  color: #FF4500;\n  font-weight: 900;\n  cursor: pointer;\n}\n\n.submit-button:hover {\n  background-color: #f6f6f6;\n}\n\n.input-error {\n  border: 1px solid red;\n  color: red;\n}\n\n.Tooltip {\n  position: relative;\n  width: 100%;\n  height: auto;\n  margin-top: 2px;\n  visibility: visible;\n  display: none;\n}\n\n.Tooltip-error {\n  display: block;\n}\n.Tooltip-error .Tooltip__arrow {\n  height: 0;\n  width: 0;\n  border-bottom: 4px solid #f4d5d2;\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n}\n\n.Tooltip__balloon {\n  color: #d9746a;\n  background-color: #f4d5d2;\n  padding: 10px;\n  height: 20px;\n}\n.Tooltip__label {\n    display: block;\n}\n\n.checkbox-label {\n  font-size: 15px;\n}\n.label {\n  font-size: 20px;\n}\n\n\n@media screen and (max-width: 450px) {\n\n  .main-form {\n    margin-top: 2px;\n    padding-left: 10px;\n    height: 90%;\n    width: auto;\n  }\n\n  .form-inputs {\n    width: 100%;\n  }\n\n  .left-form,\n  .right-form {\n    width: 100%;\n    position: static;\n    height: auto;\n    padding-left: 5px;\n    margin-left: 0;\n    padding: 0;\n\n  }\n\n  .left-form-footer,\n  .right-form-footer {\n    width: 100%;\n    position: static;\n    height: auto;\n    padding-left: 5px;\n    margin-left: 0;\n\n  }\n\n  .form-footer {\n    width: 100%;\n    position: static;\n    height: auto;\n    top: 0;\n    padding: 0;\n    margin-left: 0;\n  }\n  .form-group {\n    margin-top: 5px;\n  }\n  .input {\n    font-size: 10px;\n    padding: 5px;\n    height: 55px;\n\n}\n  .textarea {\n    width: 100%;\n    height: 150px;\n  }\n\n  .checkbox-label {\n    font-size: 12px;\n  }\n  .label {\n    font-size: 20px;\n  }\n\n}\n\n@media screen and (min-width: 400px) and (max-width: 800px) {\n\n  .main-form {\n    margin-top: 2px;\n    padding-left: 10px;\n  }\n\n\n  .left-form,\n  .right-form {\n    width: 100%;\n    position: static;\n    height: auto;\n    padding-left: 5px;\n    margin-left: 0;\n    padding: 0;\n\n  }\n\n  .left-form-footer,\n  .right-form-footer {\n    height: auto;\n    padding-left: 5px;\n    margin-left: 0;\n    padding-right: 0;\n\n  }\n\n  .submit-button {\n    width: 150px;\n\n  }\n  .form-footer {\n    width: 100%;\n    position: static;\n    height: auto;\n    top: 0;\n    padding: 0;\n    margin-left: 0;\n    margin-top: 30px;\n  }\n\n  .checkbox-label {\n    font-size: 12px;\n  }\n  .label {\n    font-size: 20px;\n  }\n\n\n}\n", ""]);
+exports.push([module.i, "html {\n  height: 100%;\n}\n\nbody {\n  min-height: 100%;\n  margin: 0;\n\n  font-size: 15px;\n\n  color: #444A59;\n  background-color: #FFFFFF;\n}\n\n.header {\n  height: 100px;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  background-color: #ffffff;\n  border-bottom: 1px solid  #D3D3D3;\n  padding-left: 20px;\n  color: #A9A9A9;\n}\n\n.page-title {\n  font-size: 20px;\n}\n\n.container {\n  width: 100%;\n  max-width: 1240px;\n  margin: 0 auto;\n}\n\n.form-page {\n  display: flex;\n  flex-direction: row;\n  flex: 1 0 auto;\n}\n\n.main-form {\n  width: 90%;\n  height: 50%;\n  background-color: #ffffff;\n}\n\n.left-form {\n  float: left;\n  width: 30%;\n  left:0;\n  padding: 20px 20px;\n}\n\n.right-form {\n  float: right;\n  width: 60%;\n  right: 0;\n  padding: 20px 20px;\n  margin-left: 20px;\n}\n\n.form-group {\n  width:100%;\n  margin-right:20px;\n  margin-top: 20px;\n}\n\n.input {\n  width: 100%;\n  border: 2px solid #D3D3D3;\n  border-radius: 5px 5px;\n  margin-top: 10px;\n  padding: 20px 20px;\n  font-size: 15px;\n}\n\n.label {\n  font-size: 20px;\n}\n\n.require {\n  font-size: 20px;\n  color: blue;\n}\n\n.textarea {\n  border: 2px solid #D3D3D3;\n  border-radius: 5px 5px;\n  margin-top: 10px;\n  padding: 20px 20px;\n  font-size: 15px;\n  width: 100%;\n  height: 250px;\n}\n\n.form-inputs {\n  display: block;\n}\n\n.form-footer {\n  width: 98.5%;\n  height: 100%;\n  max-height: 100px;\n  bottom: 0;\n  background-color: #ffffff;\n  padding: 10px 10px;\n  display: block;\n  height: 200px;\n  clear: both;\n}\n\n.left-form-footer {\n  float: left;\n  width: 65%;\n  left:0;\n  padding: 20px 20px;\n}\n\n.right-form-footer {\n  float: right;\n  width: 25%;\n  right: 0;\n  padding: 20px 20px;\n  margin-left: 20px;\n}\n\n.checkbox {\n  float: left;\n  margin-right: 10px;\n}\n\n.submit-button {\n  width: 180px;\n  height: 60px;\n  background-color: white;\n  border: 1px solid #FF4500;\n  border-radius: 10px 10px;\n  margin-top: -20px;\n  font-size: 15px;\n  color: #FF4500;\n  font-weight: 900;\n  cursor: pointer;\n}\n\n.submit-button:hover {\n  background-color: #f6f6f6;\n}\n\n.input-error {\n  border: 1px solid red;\n  color: red;\n}\n\n.Tooltip {\n  position: relative;\n  width: 100%;\n  height: auto;\n  margin-top: 2px;\n  visibility: visible;\n  display: none;\n}\n\n.Tooltip-error {\n  display: block;\n}\n\n.Tooltip-error .Tooltip__arrow {\n  height: 0;\n  width: 0;\n  border-bottom: 4px solid #f4d5d2;\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n}\n\n.Tooltip__balloon {\n  color: #d9746a;\n  background-color: #f4d5d2;\n  padding: 10px;\n  height: 20px;\n}\n\n.Tooltip__label {\n  display: block;\n}\n\n.checkbox-label {\n  font-size: 15px;\n}\n.label {\n  font-size: 20px;\n}\n\n/**\n * Phone size screen\n */\n@media screen and (max-width: 450px) {\n\n  .main-form {\n    margin-top: 2px;\n    padding-left: 10px;\n    height: 90%;\n    width: auto;\n  }\n\n  .form-inputs {\n    width: 100%;\n  }\n\n  .left-form,\n  .right-form {\n    width: 100%;\n    height: auto;\n    padding-left: 5px;\n    margin-left: 0;\n    padding: 0;\n  }\n\n  .left-form-footer,\n  .right-form-footer {\n    width: 100%;\n    height: auto;\n    padding-left: 5px;\n    margin-left: 0;\n  }\n\n  .form-footer {\n    width: 100%;\n    position: static;\n    height: auto;\n    top: 0;\n    padding: 0;\n    margin-left: 0;\n  }\n\n  .form-group {\n    margin-top: 5px;\n  }\n\n  .input {\n    font-size: 10px;\n    padding: 5px;\n    height: 25px;\n    width: 90%;\n  }\n\n  .textarea {\n    width: 80%;\n    height: 150px;\n  }\n\n  .checkbox-label {\n    font-size: 12px;\n  }\n\n  .label {\n    font-size: 20px;\n  }\n\n  .submit-button {\n    margin-left: 20px;\n    width: 100%;\n  }\n\n  .Tooltip {\n    width: 90%;\n  }\n}\n\n/**\n * Tablet size screen\n *\n */\n@media screen and (min-width: 400px) and (max-width: 800px) {\n\n  .main-form {\n    margin-top: 2px;\n    padding-left: 10px;\n  }\n\n  .left-form,\n  .right-form {\n    width: 100%;\n    height: auto;\n    padding-left: 5px;\n    margin-left: 0;\n    padding: 0;\n  }\n\n  .left-form-footer,\n  .right-form-footer {\n    height: auto;\n    padding-left: 5px;\n    margin-left: 0;\n    padding-right: 0;\n    margin-top: 10px;\n  }\n\n  .submit-button {\n    width: 150px;\n    float: right;\n  }\n\n  .form-footer {\n    width: 106%;\n    height: auto;\n    padding: 0;\n    margin-top: 10px;\n  }\n\n  .checkbox-label {\n    font-size: 20px;\n  }\n\n  .label {\n    font-size: 20px;\n  }\n}\n", ""]);
 
 // exports
 
