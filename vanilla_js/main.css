@@ -1,5 +1,5 @@
 html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
@@ -23,7 +23,6 @@ body {
   color: #A9A9A9;
 }
 
-
 .page-title {
   font-size: 20px;
 }
@@ -41,7 +40,6 @@ body {
 }
 
 .main-form {
-  position: relative;
   width: 90%;
   height: 50%;
   background-color: #ffffff;
@@ -85,6 +83,7 @@ body {
   font-size: 20px;
   color: blue;
 }
+
 .textarea {
   border: 2px solid #D3D3D3;
   border-radius: 5px 5px;
@@ -96,8 +95,7 @@ body {
 }
 
 .form-inputs {
-  position: relative;
-  top: 0;
+  display: block;
 }
 
 .form-footer {
@@ -107,6 +105,9 @@ body {
   bottom: 0;
   background-color: #ffffff;
   padding: 10px 10px;
+  display: block;
+  height: 200px;
+  clear: both;
 }
 
 .left-form-footer {
@@ -163,6 +164,7 @@ body {
 .Tooltip-error {
   display: block;
 }
+
 .Tooltip-error .Tooltip__arrow {
   height: 0;
   width: 0;
@@ -177,18 +179,22 @@ body {
   padding: 10px;
   height: 20px;
 }
+
 .Tooltip__label {
-    display: block;
+  display: block;
 }
 
 .checkbox-label {
-  font-size: 15px;
+  font-size: 18px;
 }
+
 .label {
   font-size: 20px;
 }
 
-
+/**
+ * Phone size screen
+ */
 @media screen and (max-width: 450px) {
 
   .main-form {
@@ -205,57 +211,55 @@ body {
   .left-form,
   .right-form {
     width: 100%;
-    position: static;
     height: auto;
     padding-left: 5px;
     margin-left: 0;
     padding: 0;
-
   }
 
   .left-form-footer,
   .right-form-footer {
     width: 100%;
-    position: static;
     height: auto;
     padding-left: 5px;
     margin-left: 0;
-
   }
 
   .form-footer {
     width: 100%;
-    position: static;
     height: auto;
     top: 0;
     padding: 0;
     margin-left: 0;
   }
+
   .form-group {
     margin-top: 5px;
   }
+
   .input {
     font-size: 10px;
     padding: 5px;
     height: 35px;
-    width: 100%;
+    width: 95%;
+  }
 
-
-}
   .textarea {
-    width: 100%;
+    width: 95%;
     height: 150px;
   }
 
   .checkbox-label {
     font-size: 12px;
   }
+
   .label {
     font-size: 20px;
   }
 
   .submit-button {
-    margin-left: 50px;
+    margin-left: 20px;
+    width: 95%;
   }
 
   .Tooltip {
@@ -263,6 +267,10 @@ body {
   }
 }
 
+/**
+ * Tablet size screen
+ *
+ */
 @media screen and (min-width: 400px) and (max-width: 800px) {
 
   .main-form {
@@ -270,16 +278,13 @@ body {
     padding-left: 10px;
   }
 
-
   .left-form,
   .right-form {
     width: 100%;
-    position: static;
     height: auto;
     padding-left: 5px;
     margin-left: 0;
     padding: 0;
-
   }
 
   .left-form-footer,
@@ -289,16 +294,15 @@ body {
     margin-left: 0;
     padding-right: 0;
     margin-top: 10px;
-
   }
 
   .submit-button {
     width: 150px;
-
+    float: right;
   }
+
   .form-footer {
     width: 100%;
-    position: static;
     height: auto;
     padding: 0;
     margin-top: 10px;
@@ -307,9 +311,8 @@ body {
   .checkbox-label {
     font-size: 15px;
   }
+
   .label {
     font-size: 20px;
   }
-
-
 }
